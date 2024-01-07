@@ -57,7 +57,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 8682998459474326790, guid: 7837593914acad74088d918a41785dd4,
     type: 3}
   seed: {fileID: 11400000, guid: d8d647ffeecf9284fa7ff3cde007bdf3, type: 2}
-  useRandomSeed: 0
+  useRandomSeed: 1
   minDistanceThreshold: 5
   debugMode: 0
 --- !u!1001 &7620776705509262571
