@@ -21,9 +21,25 @@ MonoBehaviour:
   rangedUnitData:
     <AttackRange>k__BackingField: 60
     <AttackPerMinute>k__BackingField: 120
-    <DamageAmount>k__BackingField: 15
+    <DamageAmount>k__BackingField: 5
     <ProjectileSpeed>k__BackingField: 5
     <HeightFactor>k__BackingField: 20
+  enemySensors:
+    targetLayer:
+      serializedVersion: 2
+      m_Bits: 64
+    sightBlocker:
+      serializedVersion: 2
+      m_Bits: 128
+    distance: 6
+  instantKillSensor:
+    targetLayer:
+      serializedVersion: 2
+      m_Bits: 64
+    sightBlocker:
+      serializedVersion: 2
+      m_Bits: 128
+    distance: 0.3
   levelGeneratorSettings:
     levelGroundPrefab: {fileID: 2267143388283068964, guid: f01fc9ff8015270459b317bf258dbb5e,
       type: 3}
@@ -36,7 +52,7 @@ MonoBehaviour:
     cellPrefabScale: {x: 1, y: 1}
     playerActorPrefab: {fileID: 4222617773410032185, guid: 05476e9ba507f02429c1a400c135b0ef,
       type: 3}
-    seed: 42
+    seed: 292
     enemyCount: 5
     useRandomSeed: 1
     minDistanceThreshold: 5

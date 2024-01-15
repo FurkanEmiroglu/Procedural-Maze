@@ -1,28 +1,37 @@
 ﻿using UnityEngine;
+using Zenject;
 
 namespace GameName.Gameplay.Combat
 {
     public class Sensor : MonoBehaviour
     {
-        [SerializeField] 
-        private LayerMask targetLayer;
+        [System.Serializable]
+        public class SensorSettings
+        {
+            public LayerMask targetLayer;
+            public LayerMask sightBlocker;
+            public float distance;
+        }
 
-        [SerializeField] 
-        private LayerMask sightBlocker;
-        
-        [SerializeField]
-        private float distance;
+        public enum SensorType
+        {
+            RangeUnitDetection,
+            InstantKill
+        }
+
+        [field: SerializeField] public SensorType SelectedType { get; private set; }
 
         private Collider[] _cache;
-        private IDamageReceiver _targetReceiver;
-        private bool _hasTarget;
-        
         private Transform _transform;
+        private SensorSettings _settings;
+        private IDamageReceiver _targetReceiver;
+    
+        private bool _hasTarget;
 
-        private void OnDrawGizmos()
+        [Inject]
+        private void Construct(SensorSettings set)
         {
-            Gizmos.color = Color.green;
-            Gizmos.DrawWireSphere(transform.position, distance);
+            _settings = set;
         }
 
         private void Awake()
@@ -64,7 +73,8 @@ namespace GameName.Gameplay.Combat
 
         private bool CheckDistanceDetection(out IDamageReceiver detected)
         {
-            int count = Physics.OverlapSphereNonAlloc(_transform.position, distance, _cache, targetLayer);
+            int count = Physics.OverlapSphereNonAlloc(_transform.position, _settings.distance, _cache, 
+                _settings.targetLayer);
 
             if (count > 0 && _cache[0].TryGetComponent(out IDamageReceiver receiver))
             {
@@ -83,7 +93,7 @@ namespace GameName.Gameplay.Combat
         {
             Vector3 position = _transform.position;
             Ray ray = new Ray(position, point - position);
-            return !Physics.Raycast(ray, distance, sightBlocker);
+            return !Physics.Raycast(ray, _settings.distance, _settings.sightBlocker);
         }
     }
 }

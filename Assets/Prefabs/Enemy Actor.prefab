@@ -44,13 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 430cdcfb1e8a4e8a9e719edf99419629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  sightBlocker:
-    serializedVersion: 2
-    m_Bits: 128
-  distance: 0.5
+  <SelectedType>k__BackingField: 1
 --- !u!1 &9077790149911146512
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,13 +214,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 430cdcfb1e8a4e8a9e719edf99419629, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  sightBlocker:
-    serializedVersion: 2
-    m_Bits: 128
-  distance: 4.5
+  <SelectedType>k__BackingField: 0
 --- !u!114 &2259416549987035120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,12 +227,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd48729629bf4208b77d53e2d4927362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 64
   projectilePrefab: {fileID: 4209871893585987793, guid: 6eff9ee0449b4c748828d204d8097eb1,
     type: 3}
-  unit: {fileID: 11400000, guid: 2b718f7650fd1a84d948d81ab4775f93, type: 2}
 --- !u!114 &4517708709919571996
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -57,7 +57,6 @@ namespace GameName.HealthSystem
         {
             if (IsDead)
             {
-                CLogger.LogWarning("Health is already depleted"); // need to fix multiple remove calls
                 return;
             }
             
