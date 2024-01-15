@@ -1,30 +1,19 @@
-﻿using GameName.SOInjection;
+﻿using GameName.MazeSystem;
 using TMPro;
 using UnityEngine;
+using Zenject;
 
 namespace GameName.UI
 {
     public class SeedView : MonoBehaviour
     {
         [SerializeField] 
-        private InjectedInt seed;
-        
-        [SerializeField] 
         private TextMeshProUGUI tmp;
 
-        private void Awake()
+        [Inject]
+        private void Construct(LevelGenerator.LevelGeneratorSettings set)
         {
-            seed.OnValueChange.AddListener(UpdateValue);
-        }
-
-        private void OnDestroy()
-        {
-            seed.OnValueChange.RemoveListener(UpdateValue);
-        }
-
-        private void UpdateValue(int value)
-        {
-            tmp.text = value.ToString();
+            tmp.text = set.seed.ToString();
         }
     }
 }

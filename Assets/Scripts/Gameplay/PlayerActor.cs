@@ -1,40 +1,35 @@
 ﻿using GameName.Gameplay.Combat;
 using GameName.Gameplay.Movement;
 using GameName.HealthSystem;
-using GameName.SOInjection;
 using UnityEngine;
+using Zenject;
 
 namespace GameName.Gameplay
 {
     public class PlayerActor : MonoBehaviour, IDamageReceiver
     {
-        [SerializeField] 
-        private ActorStats actorStats;
-
-        [SerializeField] 
-        private InjectedInt health;
-
-        [SerializeField] 
-        private InjectedBool rippleRequest;
+        [System.Serializable]
+        public class Stats
+        {
+            [field: SerializeField] public int Health { get; private set; }
+            [field: SerializeField] public float MovementSpeed { get; private set; }
+        }
 
         [SerializeField] 
         private ObjectMover objectMover;
 
+        private Stats _stats;
         private Health _actorHealth;
-        private InputReceiver _input;
+        private PlayerInput _playerInput;
 
         private Transform _transform;
 
-        private void OnValidate()
+        [Inject]
+        private void Construct(Stats stat, PlayerInput input, Health health)
         {
-            objectMover = GetComponent<ObjectMover>();
-        }
-
-        private void Awake()
-        {
-            _actorHealth = new Health(actorStats.Health);
-            health.Set(_actorHealth.Value);
-            _input = new InputReceiver();
+            _stats = stat;
+            _playerInput = input;
+            _actorHealth = health;
             _transform = transform;
         }
 
@@ -47,8 +42,6 @@ namespace GameName.Gameplay
         public void TakeDamage(int amount)
         {
             _actorHealth.Remove(amount);
-            health.Set(_actorHealth.Value);
-            rippleRequest.Set(true);
         }
 
         public Transform Transform()
@@ -58,7 +51,7 @@ namespace GameName.Gameplay
 
         private void HandleMovement(float delta)
         {
-            objectMover.AddPosition(_input.value * (actorStats.MovementSpeed * delta));
+            objectMover.AddPosition(_playerInput.Value * (_stats.MovementSpeed * delta));
         }
     }
 }

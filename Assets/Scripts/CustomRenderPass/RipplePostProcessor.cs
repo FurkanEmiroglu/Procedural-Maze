@@ -1,76 +1,75 @@
 ﻿using UnityEngine;
-using GameName.SOInjection;
+using Zenject;
 
-[RequireComponent(typeof(Camera))]
-public class RipplePostProcessor : MonoBehaviour
+public class RipplePostProcessor : IInitializable, ITickable
 {
-    /// <summary>
-    /// Singleton reference to access RipplePostProcessor anywhere.
-    /// You can change this to any other kind of reference that works for your project.
-    /// </summary>
-    private const float EXPECTED_DELTATIME_AT_60FPS = 1f / 60f;
-    
-    public const float LOWEST_AMOUNT_VALUE = 0.0001f;
-    
-    [SerializeField] 
-    private InjectedBool RequestRipple;
+    [System.Serializable]
+    public class RippleSettings
+    {
+        [field: SerializeField] public Material RippleMaterial { get; private set; }
+        [field: SerializeField] public float MaxAmount { get; private set; } = 50;
+        [field: SerializeField] public float Friction { get; private set; } = 0.9f;
+        
+        public const float LOWEST_AMOUNT_VALUE = 0.0001f;
+        public const float EXPECTED_FRAME_TIME = 1 / 60f;
+    }
 
-    [SerializeField] 
-    private InjectedFloat CurrentAmount;
-    
-    public Material RippleMaterial;
-    public float MaxAmount = 50f;
+    private RippleSettings _settings;
 
-    [Range(0, 1)]
-    public float Friction = .9f;
+    // i think injecting to URP render execution is not worth it. thats why its static
+    // player will always play on one screen only, unless we'll implement couch co-op
+    public static float CurrentAmount => _currentAmount;
+    private static float _currentAmount;
+    private bool _requestInDemand;
+    
     private bool _update = false;
+
+    [Inject]
+    private void Construct(RippleSettings set)
+    {
+        _settings = set;
+    }
+
+    public void RequestRipple()
+    {
+        _requestInDemand = true;
+    }
+
+    public void Initialize()
+    {
+        _currentAmount = _settings.RippleMaterial.GetFloat("_Amount");
+        _update = _currentAmount > RippleSettings.LOWEST_AMOUNT_VALUE;
+    }
     
-    private void Start()
+    public void Tick()
     {
-        CurrentAmount.Set(RippleMaterial.GetFloat("_Amount"));
-        _update = CurrentAmount.Get() > LOWEST_AMOUNT_VALUE;
-    }
-    public void Ripple()
-    {
-        CurrentAmount.Set(MaxAmount);
-        Vector2 pos = new Vector2(Screen.width, Screen.height) / 2f;
-        RippleMaterial.SetFloat("_CenterX", pos.x);
-        RippleMaterial.SetFloat("_CenterY", pos.y);
-        _update = true;
-    }
-    void Update()
-    {
-        if (RequestRipple.Get())
+        if (_requestInDemand)
         {
-            RequestRipple.Set(false);
-            Ripple();
+            _requestInDemand = false;
+            ApplyRipple();
         }
+        
         if (_update)
         {
-            RippleMaterial.SetFloat("_Amount", CurrentAmount.Get());
-            float amountToReduce = CurrentAmount.Get() * (1 - Friction);
-            CurrentAmount.Set(CurrentAmount.Get() - amountToReduce * (Time.deltaTime / EXPECTED_DELTATIME_AT_60FPS));
-            if (CurrentAmount.Get() < LOWEST_AMOUNT_VALUE)
+            _settings.RippleMaterial.SetFloat("_Amount", _currentAmount);
+            float amountToReduce = _currentAmount * (1 - _settings.Friction);
+            _currentAmount -= amountToReduce * (Time.deltaTime / RippleSettings.EXPECTED_FRAME_TIME);
+            
+            if (_currentAmount < RippleSettings.LOWEST_AMOUNT_VALUE)
             {
                 _update = false;
-                CurrentAmount.Set(0);
-                RippleMaterial.SetFloat("_Amount", CurrentAmount.Get());
+                _currentAmount = 0;
+                _settings.RippleMaterial.SetFloat("_Amount", _currentAmount);
             }
         }
     }
-    /// <summary>
-    /// Only works if you dont have Universal/HD Render Pipline installed.
-    /// Delete or comment this out if you dont have URP or HDRP installed.
-    /// </summary>
-    //void OnRenderImage(RenderTexture src, RenderTexture dst)
-    //{
-    //    Graphics.Blit(src, dst, RippleMaterial);
-    //}
-
-    private void OnApplicationQuit()
+    
+    private void ApplyRipple()
     {
-        RippleMaterial.SetFloat("_Amount", 0);
-        RippleMaterial.SetFloat("_CenterX", 0);
-        RippleMaterial.SetFloat("_CenterY", 0);
+        _currentAmount = _settings.MaxAmount;
+        Vector2 pos = new Vector2(Screen.width, Screen.height) / 2f;
+        _settings.RippleMaterial.SetFloat("_CenterX", pos.x);
+        _settings.RippleMaterial.SetFloat("_CenterY", pos.y);
+        _update = true;
     }
 }

@@ -1,42 +1,43 @@
 ﻿using FE.ObjectPool;
 using UnityEngine;
+using Zenject;
 
 namespace GameName.Gameplay.Combat
 {
     public sealed class RangedUnit : MonoBehaviour
     {
         [SerializeField]
-        private LayerMask targetLayer;
-
-        [SerializeField]
         private Projectile projectilePrefab;
-
-        [SerializeField]
-        private RangedUnitData unit;
 
         private Transform _transform;
         
         // attack
-        private IDamageReceiver m_currentTarget;
-        private readonly Collider[] m_output = new Collider[1];
-        private ObjectPool<Projectile> m_projectilePool;
+        private IDamageReceiver _currentTarget;
+        private RangedUnitData _unit;
+        private ObjectPool<Projectile> _projectilePool;
 
         private float _attackTimer;
 
         private void OnDrawGizmos()
         {
-            if (unit)
+            if (_unit != null)
             {
                 Gizmos.color = Color.red;
-                Gizmos.DrawWireSphere(((Component)this).transform.position, unit.AttackRange);   
+                Gizmos.DrawWireSphere(((Component)this).transform.position, _unit.AttackRange);   
             }
+        }
+
+        [Inject]
+        private void Construct(RangedUnitData unit)
+        {
+            _unit = unit;
         }
 
         private void Awake()
         {
-            _transform = ((Component)this).transform;
+            _transform = (this).transform;
             _attackTimer = CalculateCooldown();
-            m_projectilePool = new ObjectPool<Projectile>(projectilePrefab, 5, _transform);
+            _projectilePool = new ObjectPool<Projectile>(projectilePrefab, 5, _transform);
         }
 
         private void Update()
@@ -46,9 +47,9 @@ namespace GameName.Gameplay.Combat
             var sensor = GetComponent<Sensor>();
 
             if (sensor.HasTarget(out IDamageReceiver receiver)) SetTarget(receiver);
-            else m_currentTarget = null;
+            else _currentTarget = null;
             
-            if (m_currentTarget != null && CheckDistance())
+            if (_currentTarget != null && CheckDistance())
             {
                 if (_attackTimer > cooldown)
                 {
@@ -62,27 +63,27 @@ namespace GameName.Gameplay.Combat
         
         private void SetTarget(IDamageReceiver target)
         {
-            m_currentTarget = target;
+            _currentTarget = target;
         }
 
         private void Attack()
         {
-            ProjectileData data = new (_transform, m_currentTarget, unit);
-            Projectile projectile = m_projectilePool.Get();
-            projectile.Initialize(data, m_projectilePool);
+            ProjectileData data = new (_transform, _currentTarget, _unit);
+            Projectile projectile = _projectilePool.Get();
+            projectile.Initialize(data, _projectilePool);
         }
         
         private float CalculateCooldown()
         {
-            return 60f / unit.AttackPerMinute;
+            return 60f / _unit.AttackPerMinute;
         }
 
         private bool CheckDistance()
         {
-            float distance = Vector3.Distance(_transform.position, m_currentTarget.Transform().position);
+            float distance = Vector3.Distance(_transform.position, _currentTarget.Transform().position);
             
-            if (distance < unit.AttackRange) return true;
-            m_currentTarget = null;
+            if (distance < _unit.AttackRange) return true;
+            _currentTarget = null;
             return false;
         }
     }

@@ -9,7 +9,8 @@ namespace GameName.HealthSystem
         public int Value => _value;
         public bool IsDead { get; private set; }
 
-        public Action onDeath;
+        public event Action OnDeath;
+        public event Action<int> OnValueChange;
 
         private int _value;
         private int _maxValue;
@@ -40,6 +41,7 @@ namespace GameName.HealthSystem
 
             _value += amount;
             _value = Mathf.Clamp(_value, -1, _maxValue);
+            OnValueChange?.Invoke(_value);
         }
 
         
@@ -66,7 +68,11 @@ namespace GameName.HealthSystem
             if (_value <= 0)
             {
                 IsDead = true;
-                onDeath?.Invoke();
+                OnDeath?.Invoke();
+            }
+            else
+            {
+                OnValueChange?.Invoke(_value);
             }
         }
     }

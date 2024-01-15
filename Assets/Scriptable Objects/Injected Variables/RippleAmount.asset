@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a00569b3ac3945eaa9b3ffc7c46eb9d1, type: 3}
   m_Name: RippleAmount
   m_EditorClassIdentifier: 
-  value: 0
+  value: 18.81

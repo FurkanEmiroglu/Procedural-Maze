@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 
 namespace GameName.Gameplay.Combat
 {
@@ -7,6 +8,11 @@ namespace GameName.Gameplay.Combat
     // so i'll try to use navmesh agents by unity
     public class EnemyActor : MonoBehaviour
     {
+        public class Factory : PlaceholderFactory<EnemyActor>
+        {
+            
+        }
+
         [SerializeField] 
         private Sensor sensor;
 

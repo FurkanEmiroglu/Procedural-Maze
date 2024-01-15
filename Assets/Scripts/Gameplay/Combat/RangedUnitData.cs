@@ -2,8 +2,8 @@
 
 namespace GameName.Gameplay.Combat
 {
-    [CreateAssetMenu(menuName = "Combat/Ranged Unit Data")]
-    public class RangedUnitData : ScriptableObject
+    [System.Serializable]
+    public class RangedUnitData
     {
         [field: SerializeField] public float AttackRange { get; set; }
         [field: SerializeField] public int AttackPerMinute { get; set; }

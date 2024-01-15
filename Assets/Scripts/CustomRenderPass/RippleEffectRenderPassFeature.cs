@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using GameName.SOInjection;
 
 namespace GameName.CustomRenderPassess
 {
@@ -13,17 +12,15 @@ public class RippleEffectRenderPassFeature : ScriptableRendererFeature
         public RenderTargetHandle destination;
         public Material RippleMaterial;
         public int blitShaderPassIndex;
-        public InjectedFloat CurrentAmount;
         public FilterMode filterMode;
 
         private RenderTargetHandle m_TemporaryColorTexture;
 
-        public RippleEffectRenderPass(RenderPassEvent renderPassEvent, FilterMode filterMode, int blitShaderPassIndex, InjectedFloat amount, Material mat)
+        public RippleEffectRenderPass(RenderPassEvent renderPassEvent, FilterMode filterMode, int blitShaderPassIndex, Material mat)
         {
             this.renderPassEvent = renderPassEvent;
             this.filterMode = filterMode;
             this.blitShaderPassIndex = blitShaderPassIndex;
-            this.CurrentAmount = amount;
             this.RippleMaterial = mat;
             m_TemporaryColorTexture.Init("_TemporaryColorTextureZAA"); // You can name this anything you want
         }
@@ -32,7 +29,7 @@ public class RippleEffectRenderPassFeature : ScriptableRendererFeature
         {
             CommandBuffer cmd = CommandBufferPool.Get();
 
-            if (Application.isPlaying && CurrentAmount.Get() > RipplePostProcessor.LOWEST_AMOUNT_VALUE)
+            if (Application.isPlaying && RipplePostProcessor.CurrentAmount > RipplePostProcessor.RippleSettings.LOWEST_AMOUNT_VALUE)
             {
                 RenderTextureDescriptor opaqueDesc = renderingData.cameraData.cameraTargetDescriptor;
                 opaqueDesc.depthBufferBits = 0;
@@ -57,11 +54,10 @@ public class RippleEffectRenderPassFeature : ScriptableRendererFeature
     public FilterMode filterMode = FilterMode.Bilinear;
     public RenderPassEvent TheRenderPassEvent = RenderPassEvent.AfterRenderingTransparents;
     public int blitShaderPassIndex = -1;
-    public InjectedFloat CurrentAmount;
     public Material RippleMaterial;
     public override void Create()
     {
-        m_ScriptablePass = new RippleEffectRenderPass(TheRenderPassEvent, filterMode, blitShaderPassIndex, CurrentAmount, RippleMaterial);
+        m_ScriptablePass = new RippleEffectRenderPass(TheRenderPassEvent, filterMode, blitShaderPassIndex, RippleMaterial);
     }
 
     // Here you can inject one or multiple render passes in the renderer.

@@ -16,7 +16,6 @@ MonoBehaviour:
   filterMode: 2
   TheRenderPassEvent: 450
   blitShaderPassIndex: -1
-  CurrentAmount: {fileID: 11400000, guid: a4c4429f7a1bc4146898c6fd7d590b08, type: 2}
   RippleMaterial: {fileID: 2100000, guid: a691ccd00ca4cb544a6a072616c6a0ea, type: 2}
 --- !u!114 &11400000
 MonoBehaviour:

@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29c062b608b44da0b9846eb216b297e4, type: 3}
+  m_Name: Game Settings Installer
+  m_EditorClassIdentifier: 
+  playerStats:
+    <Health>k__BackingField: 100
+    <MovementSpeed>k__BackingField: 400
+  factoryPrefabs:
+    enemyPrefab: {fileID: 8682998459474326790, guid: 7837593914acad74088d918a41785dd4,
+      type: 3}
+  rangedUnitData:
+    <AttackRange>k__BackingField: 60
+    <AttackPerMinute>k__BackingField: 120
+    <DamageAmount>k__BackingField: 15
+    <ProjectileSpeed>k__BackingField: 5
+    <HeightFactor>k__BackingField: 20
+  rippleSettings:
+    <RippleMaterial>k__BackingField: {fileID: 2100000, guid: a691ccd00ca4cb544a6a072616c6a0ea,
+      type: 2}
+    <MaxAmount>k__BackingField: 12.5
+    <Friction>k__BackingField: 0.9
+  levelGeneratorSettings:
+    levelGroundPrefab: {fileID: 2267143388283068964, guid: f01fc9ff8015270459b317bf258dbb5e,
+      type: 3}
+    mazeScale: {x: 3, y: 1, z: 3}
+    cellPrefab: {fileID: 9057915847371256235, guid: 759cc7bae077f4d82809328bd9d4d57d,
+      type: 3}
+    endPointPrefab: {fileID: 2638710707839610327, guid: 690cfd4aec7e66d4cbe989a07d1489f9,
+      type: 3}
+    mazeGridSize: {x: 10, y: 10}
+    cellPrefabScale: {x: 1, y: 1}
+    playerActorPrefab: {fileID: 4222617773410032185, guid: 05476e9ba507f02429c1a400c135b0ef,
+      type: 3}
+    seed: 42
+    enemyCount: 5
+    useRandomSeed: 0
+    minDistanceThreshold: 5
+    levelSuccessTime: 90

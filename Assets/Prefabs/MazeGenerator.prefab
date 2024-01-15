@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3268847240028044751}
-  - component: {fileID: 3268847240028044744}
   m_Layer: 0
   m_Name: MazeGenerator
   m_TagString: Untagged
@@ -33,33 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3268847240028044744
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3268847240028044750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9d6249d1b4524e449932ab97b7d5d4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mazeScale: {x: 3, y: 1, z: 3}
-  cellPrefab: {fileID: 9057915847371256235, guid: 759cc7bae077f4d82809328bd9d4d57d,
-    type: 3}
-  endPointPrefab: {fileID: 2638710707839610327, guid: 690cfd4aec7e66d4cbe989a07d1489f9,
-    type: 3}
-  mazeGridSize: {x: 10, y: 10}
-  cellPrefabScale: {x: 1, y: 1}
-  playerPrefab: {fileID: 4222617773410032185, guid: 05476e9ba507f02429c1a400c135b0ef,
-    type: 3}
-  enemyPrefab: {fileID: 8682998459474326790, guid: 7837593914acad74088d918a41785dd4,
-    type: 3}
-  seed: {fileID: 11400000, guid: d8d647ffeecf9284fa7ff3cde007bdf3, type: 2}
-  useRandomSeed: 1
-  minDistanceThreshold: 5
-  debugMode: 0
 --- !u!1001 &7620776705509262571
 PrefabInstance:
   m_ObjectHideFlags: 0

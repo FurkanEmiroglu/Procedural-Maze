@@ -1,7 +1,8 @@
 ﻿using System.Collections;
-using GameName.SOInjection;
+using GameName.HealthSystem;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 namespace GameName.UI
 {
@@ -11,23 +12,28 @@ namespace GameName.UI
         [SerializeField] 
         private Image fillImage;
 
-        [SerializeField] 
-        private InjectedInt health;
+        private Health _health;
+
+        [Inject]
+        private void Construct(Health health)
+        {
+            _health = health;
+        }
 
         private void OnEnable()
         {
-            health.OnValueChange.AddListener(UpdateFill);
+            _health.OnValueChange += UpdateFill;
         }
 
         private void OnDisable()
         {
-            health.OnValueChange.RemoveListener(UpdateFill);
+            _health.OnValueChange -= UpdateFill;
         }
 
         private IEnumerator Start()
         {
             yield return new WaitForEndOfFrame();
-            UpdateFill(health.Get());
+            UpdateFill(_health.Value);
         }
 
         private void UpdateFill(int value)

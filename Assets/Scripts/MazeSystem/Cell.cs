@@ -8,13 +8,6 @@ namespace GameName.MazeSystem
     {
         [SerializeField]
         private Wall[] cellWalls;
-
-        [SerializeField]
-        private Ground ground;
-        
-        #if UNITY_EDITOR
-        public LevelGenerator levelGenerator;
-        #endif
         
         private CellState _currentState = CellState.NotVisited;
 
@@ -56,31 +49,6 @@ namespace GameName.MazeSystem
         public void UpdateState(CellState newState)
         {
             _currentState = newState;
-            
-            // testing purposes 
-            // you shouldn' use these kind of dependency gathering in your build.
-            // also these kind of property changes in a material kills gpu instancing features, causes draw call increases
-            // you can see my gpu instance compatible shaders @github.com/FurkanEmiroglu
-#if UNITY_EDITOR
-            if (levelGenerator.debugMode)
-            {
-                if (newState == CellState.Active)
-                {
-                    foreach (MeshRenderer mr in GetComponentsInChildren<MeshRenderer>()) 
-                    {
-                        mr.material.color = Color.yellow; 
-                    }
-                }
-
-                if (newState == CellState.Visited)
-                {
-                    foreach (MeshRenderer mr in GetComponentsInChildren<MeshRenderer>())
-                    {
-                        mr.material.color = Color.blue;
-                    }
-                }
-            }
-#endif
         }
     }
 }
