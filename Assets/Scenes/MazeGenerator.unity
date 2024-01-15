@@ -254,8 +254,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1920ac2845e840399e5521b0448b2fb1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPosition: {fileID: 11400000, guid: 7b17b684fa9f0cf44b1ba5682c001129, type: 2}
-  followOffset: {x: 0, y: 11, z: -2}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0

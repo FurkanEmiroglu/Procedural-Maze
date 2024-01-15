@@ -21,22 +21,25 @@ namespace GameName.Gameplay
         private Stats _stats;
         private Health _actorHealth;
         private PlayerInput _playerInput;
+        private PositionData _playerPositionData;
 
         private Transform _transform;
 
         [Inject]
-        private void Construct(Stats stat, PlayerInput input, Health health)
+        private void Construct(Stats stat, PlayerInput input, Health health, PositionData pos)
         {
             _stats = stat;
             _playerInput = input;
             _actorHealth = health;
             _transform = transform;
+            _playerPositionData = pos;
         }
 
         private void FixedUpdate()
         {
             float delta = Time.fixedDeltaTime;
             HandleMovement(delta);
+            UpdatePositionData();
         }
         
         public void TakeDamage(int amount)
@@ -47,6 +50,11 @@ namespace GameName.Gameplay
         public Transform Transform()
         {
             return _transform;
+        }
+
+        private void UpdatePositionData()
+        {
+            _playerPositionData.Set(_transform.position);
         }
 
         private void HandleMovement(float delta)

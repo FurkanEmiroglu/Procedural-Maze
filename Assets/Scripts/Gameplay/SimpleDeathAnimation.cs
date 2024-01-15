@@ -1,7 +1,6 @@
-﻿using System;
-using DG.Tweening;
-using GameName.SOInjection;
+﻿using DG.Tweening;
 using UnityEngine;
+using Zenject;
 
 namespace GameName.Gameplay
 {
@@ -9,26 +8,28 @@ namespace GameName.Gameplay
     public class SimpleDeathAnimation : MonoBehaviour
     {
         [SerializeField] 
-        private GameEvent gameLose;
-        
-        [SerializeField] 
         private float scaleDuration;
 
         [SerializeField] 
         private Ease ease;
 
-        private void OnEnable()
+        private LevelEndSignal _levelEndSignal;
+
+        [Inject]
+        private void Construct(LevelEndSignal levelEndSignal)
         {
-            gameLose.AddListener(Animate);
+            _levelEndSignal = levelEndSignal;
+            _levelEndSignal.AddListener(Animate);
         }
 
         private void OnDestroy()
         {
-            gameLose.RemoveListener(Animate);
+            _levelEndSignal.RemoveListener(Animate);
         }
 
-        private void Animate()
+        private void Animate(bool isSuccess)
         {
+            if (isSuccess) return;
             transform.DOScale(0, scaleDuration).SetEase(ease).onComplete += DisableObject;
         }
         

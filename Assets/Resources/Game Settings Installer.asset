@@ -24,11 +24,6 @@ MonoBehaviour:
     <DamageAmount>k__BackingField: 15
     <ProjectileSpeed>k__BackingField: 5
     <HeightFactor>k__BackingField: 20
-  rippleSettings:
-    <RippleMaterial>k__BackingField: {fileID: 2100000, guid: a691ccd00ca4cb544a6a072616c6a0ea,
-      type: 2}
-    <MaxAmount>k__BackingField: 12.5
-    <Friction>k__BackingField: 0.9
   levelGeneratorSettings:
     levelGroundPrefab: {fileID: 2267143388283068964, guid: f01fc9ff8015270459b317bf258dbb5e,
       type: 3}
@@ -43,6 +38,13 @@ MonoBehaviour:
       type: 3}
     seed: 42
     enemyCount: 5
-    useRandomSeed: 0
+    useRandomSeed: 1
     minDistanceThreshold: 5
     levelSuccessTime: 90
+  rippleSettings:
+    <RippleMaterial>k__BackingField: {fileID: 2100000, guid: a691ccd00ca4cb544a6a072616c6a0ea,
+      type: 2}
+    <MaxAmount>k__BackingField: 12.5
+    <Friction>k__BackingField: 0.9
+  cameraSettings:
+    followOffset: {x: 0, y: 10, z: -2.5}

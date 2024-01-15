@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 614805756484201332}
   - component: {fileID: 4222617773410032185}
   - component: {fileID: 8286883606249796255}
-  - component: {fileID: 8759165461240812888}
   - component: {fileID: 4473252922644027945}
   - component: {fileID: 1644377032078254965}
   m_Layer: 6
@@ -68,8 +67,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94d2bd88a0974a6ebd6b5594ba9b0f8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: {fileID: 11400000, guid: 034bdea5b67677347bd0a79e583ab07e, type: 2}
-  rippleRequest: {fileID: 11400000, guid: ed99172fba11a514d8bb6d0a9618cb62, type: 2}
   objectMover: {fileID: 8286883606249796255}
 --- !u!114 &8286883606249796255
 MonoBehaviour:
@@ -83,19 +80,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1e7a5efe1ec4bdca252d3d830674a6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8759165461240812888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3694251055530669281}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb23425d34c14040b63595f3dda1c960, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 11400000, guid: 7b17b684fa9f0cf44b1ba5682c001129, type: 2}
 --- !u!114 &4473252922644027945
 MonoBehaviour:
   m_ObjectHideFlags: 0

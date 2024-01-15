@@ -1,4 +1,4 @@
-using System;
+using GameName.HealthSystem;
 using UnityEngine;
 using Zenject;
 
@@ -9,15 +9,17 @@ namespace GameName.Gameplay
         public float SecondsLeft => _secondsLeft;
         
         private LevelEndSignal _levelEndSignal;
+        private Health _playerHealth;
         
         private float _secondsLeft;
         private bool _timerEnd;
 
         [Inject]
-        private void Construct(LevelEndSignal levelEndSig, float successTime)
+        private void Construct(LevelEndSignal levelEndSig, Health playerHealth, float successTime)
         {
             _levelEndSignal = levelEndSig;
             _secondsLeft = successTime;
+            _playerHealth = playerHealth;
         }
         
         public void Tick()
@@ -26,7 +28,7 @@ namespace GameName.Gameplay
             
             _secondsLeft -= Time.deltaTime;
 
-            if (_secondsLeft <= 0)
+            if (_secondsLeft <= 0 && !_playerHealth.IsDead)
             {
                 _levelEndSignal.Raise(true);
                 Time.timeScale = 0f;

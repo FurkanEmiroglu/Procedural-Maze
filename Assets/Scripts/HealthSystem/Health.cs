@@ -1,6 +1,8 @@
 ﻿using System;
+using GameName.Gameplay;
 using GameName.LoggingSystem;
 using UnityEngine;
+using Zenject;
 
 namespace GameName.HealthSystem
 {
@@ -11,6 +13,9 @@ namespace GameName.HealthSystem
 
         public event Action OnDeath;
         public event Action<int> OnValueChange;
+
+        [Inject]
+        private LevelEndSignal _signal;
 
         private int _value;
         private int _maxValue;
@@ -43,7 +48,6 @@ namespace GameName.HealthSystem
             _value = Mathf.Clamp(_value, -1, _maxValue);
             OnValueChange?.Invoke(_value);
         }
-
         
         /// <summary>
         /// 
@@ -69,6 +73,7 @@ namespace GameName.HealthSystem
             {
                 IsDead = true;
                 OnDeath?.Invoke();
+                _signal.Raise(false);
             }
             else
             {

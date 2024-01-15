@@ -10,10 +10,12 @@ namespace GameName.Gameplay
         public override void InstallBindings()
         {
             Container.Bind<IInitializable>().To<LevelGenerator>().AsSingle();
+            Container.Bind<PositionData>().AsSingle();
+            Container.Bind<RippleEffectOnDamage>().AsSingle().NonLazy();
+            
             Container.BindInterfacesAndSelfTo<PlayerInput>().AsSingle();
             Container.BindInterfacesAndSelfTo<Timer>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<RipplePostProcessor>().AsSingle().NonLazy();
-            Container.Bind<RippleEffectOnDamage>().AsSingle().NonLazy();
         }
     }
 }

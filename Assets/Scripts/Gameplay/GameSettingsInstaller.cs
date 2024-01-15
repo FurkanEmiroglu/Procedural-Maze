@@ -1,4 +1,5 @@
 using GameName.Gameplay.Combat;
+using GameName.Gameplay.Movement;
 using GameName.HealthSystem;
 using GameName.MazeSystem;
 using UnityEngine;
@@ -17,12 +18,15 @@ namespace GameName.Gameplay
 
         [SerializeField]
         private RangedUnitData rangedUnitData;
+        
+        [SerializeField]
+        private LevelGenerator.LevelGeneratorSettings levelGeneratorSettings;
 
         [SerializeField]
         private RipplePostProcessor.RippleSettings rippleSettings;
         
         [SerializeField]
-        private LevelGenerator.LevelGeneratorSettings levelGeneratorSettings;
+        private SimpleCameraController.CameraSettings cameraSettings;
 
         public override void InstallBindings()
         {
@@ -30,18 +34,13 @@ namespace GameName.Gameplay
             Container.BindInstance(playerStats).IfNotBound();
             Container.BindInstance(rangedUnitData).IfNotBound();
             Container.BindInstance(rippleSettings).IfNotBound();
-            
-            Container.BindInstance(GetPlayerHealthInstance()).AsSingle().NonLazy();
+            Container.BindInstance(cameraSettings).IfNotBound();
+
+            Container.Bind<Health>().AsSingle().WithArguments(playerStats.Health).NonLazy();
             Container.BindInstance(levelGeneratorSettings.levelSuccessTime).WhenInjectedInto<Timer>();
             
             Container.BindFactory<EnemyActor, EnemyActor.Factory>()
                      .FromComponentInNewPrefab(factoryPrefabs.enemyPrefab);
-        }
-
-        private Health GetPlayerHealthInstance()
-        {
-            Health instance = new (playerStats.Health);
-            return instance;
         }
 
         [System.Serializable]

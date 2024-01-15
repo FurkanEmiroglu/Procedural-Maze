@@ -11,7 +11,7 @@ namespace GameName.Gameplay
         [SerializeField]
         private RectTransform loseScreen;
 
-        private CustomSignal<bool> _levelEndSignal;
+        private LevelEndSignal _levelEndSignal;
 
         [Inject]
         private void Construct(LevelEndSignal signal)
